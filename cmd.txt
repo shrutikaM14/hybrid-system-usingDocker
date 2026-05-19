@@ -1,0 +1,329 @@
+# Shrutika Hybrid System – Docker Command Reference
+
+## Project Folder
+
+```bash
+cd ~/shrutika
+```
+
+---
+
+# Docker Compose Commands
+
+## Start All Containers
+
+```bash
+sudo docker compose up
+```
+
+---
+
+## Start In Background (Recommended)
+
+```bash
+sudo docker compose up -d
+```
+
+---
+
+## Rebuild Images + Start
+
+```bash
+sudo docker compose up --build
+```
+
+---
+
+## Stop Running Attached Containers
+
+```text
+CTRL + C
+```
+
+---
+
+## Stop and Remove Containers
+
+```bash
+sudo docker compose down
+```
+
+---
+
+# Container Management
+
+## Show Running Containers
+
+```bash
+sudo docker ps
+```
+
+---
+
+## Show All Containers (Including Stopped)
+
+```bash
+sudo docker ps -a
+```
+
+---
+
+## Restart FastAPI Container
+
+```bash
+sudo docker restart fastapi-container
+```
+
+---
+
+## Stop Neo4j Container
+
+```bash
+sudo docker stop neo4j-container
+```
+
+---
+
+## Start Neo4j Container
+
+```bash
+sudo docker start neo4j-container
+```
+
+---
+
+# Logs and Debugging
+
+## View FastAPI Logs
+
+```bash
+sudo docker logs fastapi-container
+```
+
+---
+
+## View PostgreSQL Logs
+
+```bash
+sudo docker logs postgres-container
+```
+
+---
+
+## View MongoDB Logs
+
+```bash
+sudo docker logs mongodb-container
+```
+
+---
+
+## View Neo4j Logs
+
+```bash
+sudo docker logs neo4j-container
+```
+
+---
+
+# Docker Images
+
+## Show Downloaded Images
+
+```bash
+sudo docker images
+```
+
+---
+
+## Build FastAPI Image Manually
+
+```bash
+sudo docker build -t shrutika-fastapi .
+```
+
+---
+
+# Docker Volumes
+
+## Show Volumes
+
+```bash
+sudo docker volume ls
+```
+
+---
+
+# Swagger and Neo4j URLs
+
+## Swagger API Docs
+
+```text
+http://localhost:8000/docs
+```
+
+---
+
+## Neo4j Browser
+
+```text
+http://localhost:7474
+```
+
+Username:
+
+```text
+neo4j
+```
+
+Password:
+
+```text
+password123
+```
+
+---
+
+# Neo4j Queries
+
+## Show All Nodes
+
+```cypher
+MATCH (n) RETURN n
+```
+
+---
+
+## Show Relationships
+
+```cypher
+MATCH (a)-[r]->(b)
+RETURN a,r,b
+```
+
+---
+
+# Important Docker Concepts
+
+## Dockerfile
+
+Creates Docker image.
+
+---
+
+## Docker Compose
+
+Runs multiple containers together.
+
+---
+
+## Volumes
+
+Provide persistent storage.
+
+---
+
+## Service Names
+
+Containers communicate using service names.
+
+Examples:
+
+```python
+host="postgres"
+```
+
+```python
+mongodb://mongodb:27017
+```
+
+```python
+bolt://neo4j:7687
+```
+
+---
+
+# Current Hybrid Architecture
+
+```text
+FastAPI
+   ├── PostgreSQL
+   ├── MongoDB
+   └── Neo4j
+```
+
+---
+
+# Important Ports
+
+| Service       | Port  |
+| ------------- | ----- |
+| FastAPI       | 8000  |
+| PostgreSQL    | 5433  |
+| MongoDB       | 27018 |
+| Neo4j Browser | 7474  |
+| Neo4j Bolt    | 7687  |
+
+---
+
+# Common Problems
+
+## localhost:8000 not opening
+
+Check:
+
+```bash
+sudo docker ps
+```
+
+If fastapi-container stopped:
+
+```bash
+sudo docker logs fastapi-container
+```
+
+Then restart:
+
+```bash
+sudo docker restart fastapi-container
+```
+
+---
+
+## System Freezing
+
+Stop Neo4j:
+
+```bash
+sudo docker stop neo4j-container
+```
+
+Neo4j uses high RAM.
+
+---
+
+# Recommended Lightweight Workflow
+
+## Start Containers
+
+```bash
+sudo docker compose up -d
+```
+
+---
+
+## Stop Neo4j For Better Performance
+
+```bash
+sudo docker stop neo4j-container
+```
+
+---
+
+## Continue Working With
+
+* FastAPI
+* PostgreSQL
+* MongoDB
+
+Neo4j only when needed.
